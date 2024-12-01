@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import sys
 import heapq
+import time
 
 def main(test_mode):
+    start = time.time()
     if test_mode:
         path = "example.txt"
     else:
@@ -16,14 +18,16 @@ def main(test_mode):
             left.append(int(pair[0]))
             right.append(int(pair[-1]))
 
-    heapq.heapify(left)
-    heapq.heapify(right)
+    left.sort()
+    right.sort()
 
     sum = 0
     for i in range(len(left)):
-        sum += abs(heapq.heappop(left) - heapq.heappop(right))
+        sum += abs(left[i] - right[i])
+    end = time.time()
 
     print("sum:", sum)
+    print("Execution time:", (end-start) * 10**3)
 
 if __name__ == "__main__":
     n = len(sys.argv)
