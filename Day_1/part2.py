@@ -8,22 +8,26 @@ def main(test_mode):
     else:
         path = "input.txt"
 
-    left, right = [], []
+    left, right = [], {}
 
     with open(path, 'r') as file:
         for line in file:
             pair = line.strip().split(' ')
             left.append(int(pair[0]))
-            right.append(int(pair[-1]))
+            
+            right_num = int(pair[-1])
+            if right_num not in right.keys():
+                right[right_num] = 1
+            else:
+                right[right_num] += 1
 
-    heapq.heapify(left)
-    heapq.heapify(right)
+    sim_score = 0
 
-    sum = 0
     for i in range(len(left)):
-        sum += abs(heapq.heappop(left) - heapq.heappop(right))
+        if left[i] in right.keys():
+            sim_score += right[left[i]] * left[i]
 
-    print("sum:", sum)
+    print("sim_score:", sim_score)
 
 if __name__ == "__main__":
     n = len(sys.argv)
