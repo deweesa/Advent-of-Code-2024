@@ -18,8 +18,32 @@ def main(test_mode):
 
     start = mem.find("mul(")
     while start != -1:
-        print(mem[start:start+4])
-        
+        i = start + 4
+        left = 0
+        right = 0
+
+        while mem[i].isnumeric():
+            left = left*10 + int(mem[i])
+            i += 1
+
+        if mem[i] != ",":
+            start = mem.find("mul(", i)
+            continue
+        else:
+            i += 1
+
+        while mem[i].isnumeric():
+            right = right*10 + int(mem[i])
+            i += 1
+
+        if mem[i] != ")":
+            start = mem.find("mul(", i)
+            continue
+        else:
+            i += 1
+
+        result += left * right
+
         start = mem.find("mul(", start + 1)
 
     print(result)
